@@ -2,3 +2,23 @@
   margin: 3rem auto;
   text-align: center;
 }
+
+label {
+  display: block;
+}
+
+input {
+  display: block;
+  outline: none;
+  margin: 1rem auto;
+  padding: 0.5rem 3rem;
+  text-align: center;
+}
+
+.red {
+  color: red;
+}
+
+.bold {
+  font-weight: bold;
+}
