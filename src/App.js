@@ -4,6 +4,7 @@ import Radium, { StyleRoot } from 'radium';
 import './App.css';
 import Person from './Person/Person';
 import Validation from './Validation/Validation';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -71,13 +72,14 @@ class App extends Component {
       personItems = (
         <div>
           {persons.map((person, index) => (
-            <Person
-              key={person.id}
-              click={() => this.deletePersonHandler(index)}
-              name={person.name}
-              age={person.age}
-              changed={event => this.nameChangeHandler(event, person.id)}
-            />
+            <ErrorBoundary key={person.id}>
+              <Person
+                click={() => this.deletePersonHandler(index)}
+                name={person.name}
+                age={person.age}
+                changed={event => this.nameChangeHandler(event, person.id)}
+              />
+            </ErrorBoundary>
           ))}
         </div>
       );
@@ -111,13 +113,14 @@ class App extends Component {
           {personItems}
 
           <div>
-            <label htmlFor="validation">Validate text length in input field</label>
+            <label htmlFor="validation">
+              Validate text length in input field
+            </label>
             <input
               id="validation"
               type="text"
               onChange={this.onChangeLengthHandler}
             />
-
             <Validation length={textLength} />
           </div>
 
