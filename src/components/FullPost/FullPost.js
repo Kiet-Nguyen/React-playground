@@ -12,11 +12,15 @@ class FullPost extends Component {
 		if (this.props.idBlog) {
 			// Prevent infinite loop
 			if (!this.state.loadedPost || (this.state.loadedPost.id !== this.props.idBlog)) {
-				const dataURL = ('https://jsonplaceholder.typicode.com/posts/' + this.props.idBlog);
-				const results = await axios.get(dataURL);
+				const results = await axios.get('/posts/' + this.props.idBlog);
 				this.setState({ loadedPost: results.data });
 			}
 		}
+	}
+
+	deletePostHandler = async () => {
+		const removedPost = await axios.delete('/posts/' + this.props.idBlog);
+		console.log('removedPost', removedPost);
 	}
 
 	render () {
@@ -30,7 +34,7 @@ class FullPost extends Component {
 					<h1>{ this.state.loadedPost.title }</h1>
 					<p>{ this.state.loadedPost.body }</p>
 					<div className="Edit">
-						<button className="Delete">Delete</button>
+						<button className="Delete" onClick={ this.deletePostHandler }>Delete</button>
 					</div>
 				</div>
 			);

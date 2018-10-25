@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axios from '../../axios';
 
 import Post from '../../components/Post/Post';
 import FullPost from '../../components/FullPost/FullPost';
@@ -10,15 +10,19 @@ class Blog extends Component {
 	state = {
 		posts: [],
 		selectedPostId: null,
+		error: false,
 	}
 
 	componentDidMount = async () => {
-		const dataURL = 'https://jsonplaceholder.typicode.com/posts';
-		const results = await axios.get(dataURL);
-		const numOfPosts = results.data.slice(0, 4);
-		const updatedPosts = numOfPosts.map(post => ({ ...post, author: 'Kiet' }));
+		try {
+			const results = await axios.get('/posts');
+			const numOfPosts = results.data.slice(0, 4);
+			const updatedPosts = numOfPosts.map(post => ({ ...post, author: 'Kiet' }));
 
-		this.setState({ posts: updatedPosts });
+			this.setState({ posts: updatedPosts });
+		} catch (error) {
+			this.setState({ error: true });
+		}
 	}
 
 	postSelectedHandler = id => {
@@ -26,15 +30,18 @@ class Blog extends Component {
 	}
 
 	render() {
-		const posts = this.state.posts.map(post => {
-			const { title, id, author } = post;
-			return <Post
-				key={ id }
-				titleBlog={ title }
-				authorBlog={ author }
-				clickedBlog={ () => this.postSelectedHandler(id) }
-			/>
-		});
+		let posts = <p>Something went wrong!</p>;
+		if (!this.state.error) {
+			posts = this.state.posts.map(post => {
+				const { title, id, author } = post;
+				return <Post
+					key={id}
+					titleBlog={title}
+					authorBlog={author}
+					clickedBlog={() => this.postSelectedHandler(id)}
+				/>
+			});	
+		}
 
 		return (
 			<div>
