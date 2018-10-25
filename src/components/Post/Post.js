@@ -2,11 +2,11 @@ import React from 'react';
 
 import './Post.css';
 
-const post = props => (
-	<article className="Post">
-		<h1>Title</h1>
+const post = ({ titleBlog, authorBlog, clickedBlog }) => (
+	<article className="Post" onClick={ clickedBlog }>
+		<h1>{ titleBlog }</h1>
 		<div className="Info">
-			<div className="Author">Author</div>
+			<div className="Author">{ authorBlog }</div>
 		</div>
 	</article>
 );
