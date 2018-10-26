@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Radium, { StyleRoot } from 'radium';
+import { BrowserRouter } from 'react-router-dom';
 
 import './App.css';
 import Persons from '../components/Persons/Persons';
@@ -95,8 +96,10 @@ class App extends Component {
 
     return (
       <>
-        <Blog />
-        <StyleRoot>
+        <BrowserRouter>
+          <Blog />
+        </BrowserRouter>
+        {/* <StyleRoot>
           <div className="App">
             {personItems}
 
@@ -112,7 +115,7 @@ class App extends Component {
               <Validation length={textLength} />
             </div>
           </div>
-        </StyleRoot>
+        </StyleRoot> */}
       </>
     );
   }
